@@ -1,10 +1,11 @@
 package controllers;
 
+import exceptions.NoSuchRequestException;
 import javafx.collections.ObservableList;
 import models.SupportRequest;
 
 public interface SupportController {
 
     ObservableList<SupportRequest> showAllRequests();
-    boolean reply(SupportRequest request, String answer);
+    void reply(SupportRequest request, String answer) throws NoSuchRequestException;
 }

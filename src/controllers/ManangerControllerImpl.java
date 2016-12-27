@@ -1,0 +1,63 @@
+package controllers;
+
+import api.SendMailSSL;
+import dataBase.DataBase;
+import exceptions.NoSuchContactException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import models.User;
+
+import java.util.Optional;
+
+public class ManangerControllerImpl implements ManangerConroller {
+
+    private DataBase db = DataBase.getInstance();
+
+    @Override
+    public ObservableList<User> showMyUsers(User mentor) {
+        ObservableList<User> result = FXCollections.observableArrayList();
+        db.users.keySet().stream().filter(key -> mentor.equals(db.users.get(key).getMentor())).
+                forEach(key -> result.add(db.users.get(key)));
+
+        return result;
+    }
+
+    @Override
+    public String showUserInfo(String login) throws NoSuchContactException {
+
+        Optional<String> key = findKey(login);
+        if (!key.isPresent())
+            throw new NoSuchContactException();
+
+        return db.users.get(key.get()).toString();
+    }
+
+    @Override
+    public void updateInfo(String login, User user) throws NoSuchContactException {
+        Optional<String> key = findKey(login);
+        if (!key.isPresent())
+            throw new NoSuchContactException();
+
+        db.users.replace(key.get(), user);
+    }
+
+    @Override
+    public void banUser(String name, String cause) throws NoSuchContactException {
+
+        if (!db.users.containsKey(name)) {
+            throw new NoSuchContactException();
+        }
+
+        User scope = db.users.get(name);
+        db.banned.put(name, scope);
+
+        SendMailSSL.sendLetter(db.users.get(name).getEmail(), "SandSay", scope.getLogin() +
+                "You've been banned by cause: \n" + cause);
+
+    }
+
+    private Optional<String> findKey(String login) {
+        return db.users.keySet().stream().filter(k -> db.users.get(k).getLogin().
+                equals(login)).findAny();
+    }
+}
