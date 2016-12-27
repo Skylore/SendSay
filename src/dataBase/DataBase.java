@@ -10,7 +10,7 @@ public class DataBase {
 
     private static DataBase instance;
  
-    public DataBase() {
+    private DataBase() {
     }
 
     public static DataBase getInstance() {
