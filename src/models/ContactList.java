@@ -1,14 +1,16 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ContactList {
 
     private User owner;
     private String name;
-    private ArrayList<User> contacts;
 
-    public ContactList(User owner, ArrayList<User> contacts) {
+    public final Map<String, String> contacts;
+
+    public ContactList(User owner, Map<String, String> contacts) {
         this.owner = owner;
         this.contacts = contacts;
     }
@@ -17,7 +19,7 @@ public class ContactList {
         return owner;
     }
 
-    public ArrayList<User> getContacts() {
+    public Map<String, String> getContacts() {
         return contacts;
     }
 
