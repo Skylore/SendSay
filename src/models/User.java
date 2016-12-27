@@ -67,11 +67,17 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return mentor != null ? "User{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", mentor=" + mentor.toString() +
+                '}'
+                :
+                "User{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
