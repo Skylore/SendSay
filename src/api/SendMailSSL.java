@@ -13,6 +13,10 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMailSSL {
 
+    public static void main(String[] args) {
+        SendMailSSL.sendLetter("iturchin98@gmail.com", "SendSay", "text");
+    }
+
     public static void sendLetter(String receiver, String tittle, String text) {
 
         Properties props = new Properties();

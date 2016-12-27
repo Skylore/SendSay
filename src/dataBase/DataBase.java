@@ -9,16 +9,28 @@ import java.util.*;
 
 public class DataBase {
 
+    public static void main(String[] args) {
+        DataBase dataBase = DataBase.getInstance();
+        dataBase.users.put("Skylore", new User());
+        dataBase.users.put("Quimos", new User());
+        new Logger().write(Converter.toJson(dataBase));
+    }
+
     private static DataBase instance;
- 
+
     public DataBase() {
     }
 
-    public static DataBase getInstance() {
-        if (instance == null) {
+    static {
+        String fromJson = new Logger().read();
+        if (fromJson.isEmpty()) {
             instance = new DataBase();
+        } else {
+            instance = Converter.fromJson(fromJson, DataBase.class);
         }
+    }
 
+    public static DataBase getInstance() {
         return instance;
     }
 
