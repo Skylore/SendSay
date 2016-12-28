@@ -3,13 +3,19 @@ package controllers;
 import api.SendMailSSL;
 import dataBase.DataBase;
 import exceptions.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import models.ContactList;
+import models.SupportRequest;
 import models.User;
 import models.WorkRequest;
 import sun.plugin.dom.exception.InvalidAccessException;
 
 import java.util.List;
 import java.util.Map;
+
+import static javafx.collections.FXCollections.observableHashMap;
 
 public class UserControllerImpl implements UserController {
 
@@ -55,17 +61,16 @@ public class UserControllerImpl implements UserController {
     public void makeDistribution(String contactList, String tittle, String text) throws NoSuchContactListException, InvalidEmailException, BannedUserException {
         if (dataBase.banned.containsKey(inSystem.getLogin())) {
             throw new BannedUserException();
-        }
-        try {
-            for (String email : dataBase.contactLists.get(contactList).getContacts().values()) {
-                try {
-                    SendMailSSL.sendLetter(email, tittle, text);
-                } catch (RuntimeException ex) {
-                    throw new InvalidEmailException();
-                }
-            }
-        } catch (Exception e) {
+        } else if (!dataBase.contactLists.containsKey(contactList)) {
             throw new NoSuchContactListException();
+        }
+
+        for (String email : dataBase.contactLists.get(contactList).getContacts().values()) {
+            try {
+                SendMailSSL.sendLetter(email, tittle, text);
+            } catch (RuntimeException ex) {
+                throw new InvalidEmailException();
+            }
         }
     }
 
@@ -125,5 +130,32 @@ public class UserControllerImpl implements UserController {
     @Override
     public void sendWorkRequest(WorkRequest workRequest) {
         dataBase.workRequests.add(workRequest);
+    }
+
+    @Override
+    public void ask(SupportRequest supportRequest) {
+        if (inSystem.getMentor() == null) {
+            dataBase.supportRequests.add(supportRequest);
+        } else {
+            dataBase.managerSupportRequest.put(inSystem.getLogin(), supportRequest);
+        }
+    }
+
+    @Override
+    public ObservableList<ContactList> showMyContactLists() {
+        ObservableList<ContactList> res = FXCollections.observableArrayList();
+        dataBase.contactLists.values().stream().filter((e) -> e.getOwner().equals(inSystem)).forEach(res::add);
+        return res;
+    }
+
+    @Override
+    public ObservableMap<String, String> showAllContactsInList(String name) throws NoSuchContactListException {
+        if (!dataBase.contactLists.containsKey(name)) {
+            throw new NoSuchContactListException();
+        }
+
+        ObservableMap<String, String> res = observableHashMap();
+        res.putAll(dataBase.contactLists.get(name).getContacts());
+        return res;
     }
 }

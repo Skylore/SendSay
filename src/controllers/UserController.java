@@ -6,6 +6,7 @@ import exceptions.*;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import models.ContactList;
+import models.SupportRequest;
 import models.User;
 import models.WorkRequest;
 
@@ -30,4 +31,12 @@ public interface UserController {
    void updateInfo(String name, User user) throws NoSuchContactException;
 
    void sendWorkRequest(WorkRequest workRequest);
+
+   void ask(SupportRequest supportRequest);
+
+   ObservableList<ContactList> showMyContactLists();
+
+   ObservableMap<String, String> showAllContactsInList(String name) throws NoSuchContactListException;
+
+
 }

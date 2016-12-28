@@ -5,11 +5,12 @@ import dataBase.DataBase;
 import exceptions.NoSuchContactException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import models.SupportRequest;
 import models.User;
 
-import java.util.Optional;
+import java.util.*;
 
-public class ManangerControllerImpl implements ManangerConroller {
+public class ManagerControllerImpl implements ManagerController {
 
     private DataBase db = DataBase.getInstance();
 
@@ -54,6 +55,17 @@ public class ManangerControllerImpl implements ManangerConroller {
         SendMailSSL.sendLetter(db.users.get(name).getEmail(), "SandSay", scope.getLogin() +
                 "You've been banned by cause: \n" + cause);
 
+    }
+
+    @Override
+    public void reply(SupportRequest supportRequest, String reply) {
+        List<SupportRequest> supportRequests = (ArrayList<SupportRequest>)db.managerSupportRequest.values();
+
+        supportRequests.forEach((e) -> {
+            if (e.equals(supportRequest)) {
+                SendMailSSL.sendLetter(e.getEmail(), "SendSay", reply);
+            }
+        });
     }
 
     private Optional<String> findKey(String login) {

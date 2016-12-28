@@ -3,6 +3,8 @@ package controllers;
 import api.SendMailSSL;
 import dataBase.DataBase;
 import exceptions.NoSuchContactException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import models.User;
 import models.WorkRequest;
 
@@ -11,6 +13,20 @@ import java.util.NoSuchElementException;
 public class AdminControllerImpl implements AdminController {
 
     private DataBase dataBase = DataBase.getInstance();
+
+    @Override
+    public ObservableList<User> showAllUsers() {
+        ObservableList<User> scope = FXCollections.observableArrayList();
+        scope.addAll(dataBase.users.values());
+        return scope;
+    }
+
+    @Override
+    public ObservableList<WorkRequest> showWorkRequests() {
+        ObservableList<WorkRequest> scope = FXCollections.observableArrayList();
+        scope.addAll(dataBase.workRequests);
+        return scope;
+    }
 
     @Override
     public void setManager(String user, String manager) throws NoSuchContactException {

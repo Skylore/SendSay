@@ -33,6 +33,7 @@ public class DataBase {
     public final List<SupportRequest> supportRequests = new ArrayList<>();
     public final Map<String, ContactList> contactLists = new HashMap<>();
     public final Map<String, User> banned = new HashMap<>();
+    public final Map<String, SupportRequest> managerSupportRequest = new HashMap<>();
 
     public final Queue<WorkRequest> workRequests = new LinkedList<>();
 

@@ -59,7 +59,7 @@ public class User {
 
     @Override
     public String toString() {
-        return mentor != null ? "User{" +
+        return  "User{" +
                 "login='" + login + '\'' +
                 '}';
     }
