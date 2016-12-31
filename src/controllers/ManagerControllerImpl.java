@@ -12,6 +12,8 @@ import java.util.*;
 
 public class ManagerControllerImpl implements ManagerController {
 
+    public static final String pass = "managerPass";
+
     private DataBase db = DataBase.getInstance();
 
     @Override

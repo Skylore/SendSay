@@ -38,5 +38,5 @@ public interface UserController {
 
    ObservableMap<String, String> showAllContactsInList(String name) throws NoSuchContactListException;
 
-
+   User getInSystem();
 }

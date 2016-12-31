@@ -12,6 +12,8 @@ import java.util.NoSuchElementException;
 
 public class AdminControllerImpl implements AdminController {
 
+    public static final String pass = "adminPass";
+
     private DataBase dataBase = DataBase.getInstance();
 
     @Override

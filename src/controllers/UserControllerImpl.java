@@ -6,6 +6,8 @@ import exceptions.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import jdk.nashorn.internal.objects.annotations.Constructor;
+import jdk.nashorn.internal.objects.annotations.Function;
 import models.ContactList;
 import models.SupportRequest;
 import models.User;
@@ -94,6 +96,7 @@ public class UserControllerImpl implements UserController {
         dataBase.contactLists.remove(name);
     }
 
+    @Constructor
     @Override
     public void addContactToList(String scope, String name, String email) throws NoSuchContactListException {
         if (!dataBase.contactLists.containsKey(scope)) {
@@ -157,5 +160,9 @@ public class UserControllerImpl implements UserController {
         ObservableMap<String, String> res = observableHashMap();
         res.putAll(dataBase.contactLists.get(name).getContacts());
         return res;
+    }
+
+    public User getInSystem() {
+        return inSystem;
     }
 }

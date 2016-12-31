@@ -1,0 +1,24 @@
+.root{
+    -fx-background-image: url("Background.jpg");
+    -fx-background-size: 800 500;
+}
+.label_main{
+    -fx-background-color: #F0F8FF;
+    -fx-opacity: 0.5;
+    -fx-font-size: 150%;
+    -fx-font-weight: bold;
+}
+.label{
+    -fx-background-color: #F0F8FF;
+    -fx-opacity: 0.5;
+}
+.sign{
+    -fx-background-color: #F0F8FF;
+    -fx-opacity: 0.8;
+    -fx-font-weight: bold;
+}
+.corp_choose_label{
+    -fx-background-color: #4682B4;
+    -fx-opacity: 0.8;
+    -fx-font-weight: bold;
+}

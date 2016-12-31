@@ -9,6 +9,8 @@ import models.SupportRequest;
 
 public class SupportControllerImpl implements SupportController {
 
+    public static final String pass = "supportPass";
+
     @Override
     public ObservableList<SupportRequest> showAllRequests() {
         ObservableList<SupportRequest> result = FXCollections.observableArrayList();
