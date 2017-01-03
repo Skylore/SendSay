@@ -24,7 +24,7 @@ public class MainPage {
 
     private Label logo = new Label("", new ImageView("view/SendSayLogo.png"));
     private Label info = new Label("Bulk email distributions");
-    private Label button = new Label("Try it free");
+    private Label button = new Label("", new ImageView("view/res/tryItButton.jpg"));
 
     private HBox pagination = new HBox(10);
 
@@ -49,7 +49,7 @@ public class MainPage {
         layout.setTop(top);
 
         // pagination
-        Circle circle = new Circle(5, Color.WHEAT);
+        Circle circle = new Circle(5, Color.WHEAT.darker());
         circle.setOpacity(0.8);
         circle.setOnMouseEntered((e) -> {
             circle.setScaleX(1.1);
@@ -61,22 +61,12 @@ public class MainPage {
         });
 
         // center button
-        button.setOpacity(0.9);
-        button.setScaleX(2.3);
-        button.setScaleY(2.3);
-        button.setTextFill(Color.WHITE);
-        button.setStyle("-fx-font-style: italic");
-        button.setAlignment(Pos.CENTER);
         button.getStyleClass().clear();
-        button.setBackground(new Background(new BackgroundFill(Color.INDIANRED.darker(), null, null)));
-        button.setOnMouseEntered((e) -> {
-            button.setScaleX(2.4);
-            button.setScaleY(2.4);
-        });
-        button.setOnMouseExited((e) -> {
-            button.setScaleX(2.3);
-            button.setScaleY(2.3);
-        });
+        button.setScaleX(0.7);
+        button.setScaleY(0.7);
+        button.setOpacity(0.6);
+        button.setOnMouseEntered((e) -> button.setOpacity(0.7));
+        button.setOnMouseExited((e) -> button.setOpacity(0.6));
         button.setTranslateY(-50);
         button.setOnMouseClicked((e) -> {
             HBox target = new Entrance(primaryStage).getTopPanel();
@@ -98,7 +88,7 @@ public class MainPage {
 
         layout.setCenter(button);
 
-        Circle circle1 = new Circle(5, Color.WHITESMOKE);
+        Circle circle1 = new Circle(5, Color.WHEAT);
         circle1.setOpacity(0.8);
         circle1.setOnMouseClicked((e) -> {
             HBox target = new Entrance(primaryStage).getTopPanel();
@@ -143,15 +133,11 @@ public class MainPage {
         primaryStage.setScene(scene);
     }
 
-    public Label getLogo() {
-        return logo;
-    }
-
-    public Label getInfo() {
-        return info;
-    }
-
     public Label getButton() {
         return button;
+    }
+
+    public VBox getTop() {
+        return top;
     }
 }

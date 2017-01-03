@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -136,11 +137,26 @@ public class Entrance {
         Circle circle = new Circle(5, Color.WHEAT);
         circle.setOpacity(0.8);
         circle.setOnMouseClicked((e) -> {
+            MainPage mainPage = new MainPage(primaryStage);
+
+            VBox target = mainPage.getTop();
+            target.setTranslateY(-30);
+
+            Label target1 = mainPage.getButton();
+            target1.setTranslateX(-245);
+            target1.setTranslateY(183);
+
+            borderPane.setRight(target1);
+            borderPane.setCenter(target);
             transition.translateTransition(0.8, topPanel.getTranslateX(), 640,
                     topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).setOnFinished((e1) -> {
                 borderPane.getChildren().remove(pagination);
                 MainPage.getPage(primaryStage);
             });
+            transition.translateTransition(0.8, target.getTranslateX() - 500, target.getTranslateX(), target.getTranslateY(),
+                    target.getTranslateY(), target);
+            transition.translateTransition(0.8, target1.getTranslateX() - 500, target1.getTranslateX(), target1.getTranslateY(),
+                    target1.getTranslateY(), target1);
         });
         circle.setOnMouseEntered((e) -> {
             circle.setScaleX(1.1);
@@ -151,7 +167,7 @@ public class Entrance {
             circle.setScaleY(1);
         });
 
-        Circle circle1 = new Circle(5, Color.WHEAT);
+        Circle circle1 = new Circle(5, Color.WHEAT.darker());
         circle1.setOpacity(0.8);
         circle1.setOnMouseEntered((e) -> {
             circle1.setScaleX(1.1);
