@@ -22,3 +22,8 @@
     -fx-opacity: 0.8;
     -fx-font-weight: bold;
 }
+.label_sendsay_info {
+    -fx-font-style: oblique;
+    -fx-font-weight: bold;
+    -fx-color: #fce341;
+}
