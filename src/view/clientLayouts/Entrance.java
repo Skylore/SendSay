@@ -3,7 +3,6 @@ package view.clientLayouts;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -15,19 +14,29 @@ import view.Transition;
 
 public class Entrance {
 
-    public BorderPane getLayout(Stage primaryStage) {
+    private Stage primaryStage;
 
-        BorderPane borderPane = new BorderPane();
+    public Entrance(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        init();
+    }
+
+    private BorderPane borderPane = new BorderPane();
+
+    private GridPane logInPane = SignInLayout.getLayout(primaryStage);
+    private GridPane signUpPane = SignUpLayout.getLayout(primaryStage);
+    private GridPane corporate = CorporateSignInLayout.getLayout(primaryStage);
+
+    private Label signIn = new Label("Sign in");
+    private Label signUp = new Label("Sign up");
+    private Label corporateLabel = new Label("Corporate");
+    private HBox topPanel = new HBox(15);
+
+    private HBox pagination = new HBox(10);
+
+    private void init() {
         Transition transition = new Transition();
 
-        GridPane logInPane = SignInLayout.getLayout(primaryStage);
-        GridPane signUpPane = SignUpLayout.getLayout(primaryStage);
-        GridPane corporate = CorporateSignInLayout.getLayout(primaryStage);
-
-        // action choose panel
-        HBox topPanel = new HBox(15);
-
-        Label signIn = new Label("Sign in");
         signIn.setPrefSize(150, 30);
         signIn.setAlignment(Pos.CENTER);
         signIn.getStyleClass().add("label_main");
@@ -41,7 +50,6 @@ public class Entrance {
             signIn.setScaleY(1);
         });
 
-        Label signUp = new Label("Sign up");
         signUp.setPrefSize(150, 30);
         signUp.setAlignment(Pos.CENTER);
         signUp.getStyleClass().add("label_main");
@@ -55,7 +63,6 @@ public class Entrance {
             signUp.setScaleY(1);
         });
 
-        Label corporateLabel = new Label("Corporate");
         corporateLabel.setPrefSize(150, 30);
         corporateLabel.setAlignment(Pos.CENTER);
         corporateLabel.getStyleClass().add("label_main");
@@ -68,8 +75,6 @@ public class Entrance {
             corporateLabel.setScaleX(1);
             corporateLabel.setScaleY(1);
         });
-
-        // transitions
         signIn.setOnMouseClicked((e) -> {
 
             transition.translateTransition(0.8, signIn.getTranslateX(), 160 - signIn.getTranslateX(), 235, 100, signIn);
@@ -128,17 +133,15 @@ public class Entrance {
             });
         });
 
-        // pagination
-
-        HBox pagination = new HBox(10);
         Circle circle = new Circle(5, Color.WHEAT);
         circle.setOpacity(0.8);
-        circle.setOnMouseClicked(e ->
-                transition.translateTransition(0.8, topPanel.getTranslateX(), 640,
-                        topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).setOnFinished((e1) -> {
-                    borderPane.getChildren().remove(pagination);
-                    new MainPage().getPage(primaryStage);
-            }));
+        circle.setOnMouseClicked((e) -> {
+            transition.translateTransition(0.8, topPanel.getTranslateX(), 640,
+                    topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).setOnFinished((e1) -> {
+                borderPane.getChildren().remove(pagination);
+                MainPage.getPage(primaryStage);
+            });
+        });
         circle.setOnMouseEntered((e) -> {
             circle.setScaleX(1.1);
             circle.setScaleY(1.1);
@@ -165,14 +168,20 @@ public class Entrance {
 
         borderPane.setBottom(pagination);
 
-        // preferences
         topPanel.setAlignment(Pos.TOP_CENTER);
         topPanel.getChildren().addAll(signIn, signUp, corporateLabel);
 
         borderPane.setTop(topPanel);
         borderPane.getStylesheets().add("view/style");
-        primaryStage.setScene(new Scene(borderPane, 800, 500));
+    }
 
-        return borderPane;
+    public static void getLayout(Stage primaryStage) {
+
+        Entrance entrance = new Entrance(primaryStage);
+        primaryStage.setScene(new Scene(entrance.borderPane, 800, 500));
+    }
+
+    public HBox getTopPanel() {
+        return topPanel;
     }
 }

@@ -1,10 +1,8 @@
 package view;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -14,20 +12,31 @@ import view.clientLayouts.Entrance;
 
 public class MainPage {
 
-    public void getPage(Stage primaryStage) {
+    private Stage primaryStage;
+
+    public MainPage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        init();
+    }
+
+    private BorderPane layout = new BorderPane();
+    private VBox top = new VBox();
+
+    private Label logo = new Label("", new ImageView("view/SendSayLogo.png"));
+    private Label info = new Label("Bulk email distributions");
+    private Label button = new Label("Try it free");
+
+    private HBox pagination = new HBox(10);
+
+    private void init() {
 
         Transition transition = new Transition();
-        BorderPane layout = new BorderPane();
 
         // top panel
-        VBox top = new VBox();
-
-        Label logo = new Label("", new ImageView("view/SendSayLogo.png"));
         logo.getStyleClass().clear();
         logo.setScaleX(0.7);
         logo.setScaleY(0.7);
 
-        Label info = new Label("Bulk email distributions");
         info.getStyleClass().clear();
         info.setAlignment(Pos.CENTER);
         info.setScaleX(1.5);
@@ -40,7 +49,6 @@ public class MainPage {
         layout.setTop(top);
 
         // pagination
-        HBox pagination = new HBox(10);
         Circle circle = new Circle(5, Color.WHEAT);
         circle.setOpacity(0.8);
         circle.setOnMouseEntered((e) -> {
@@ -53,17 +61,14 @@ public class MainPage {
         });
 
         // center button
-        Label button = new Label("Try it free");
-        button.setOpacity(0.7);
+        button.setOpacity(0.9);
         button.setScaleX(2.3);
         button.setScaleY(2.3);
-        button.setTextFill(Color.INDIANRED.darker());
-        button.setStyle("-fx-font-weight: bold");
+        button.setTextFill(Color.WHITE);
+        button.setStyle("-fx-font-style: italic");
         button.setAlignment(Pos.CENTER);
         button.getStyleClass().clear();
-        button.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
-        button.setBorder(new Border(new BorderStroke(Color.INDIANRED.darker(), BorderStrokeStyle.SOLID,
-                CornerRadii.EMPTY, new BorderWidths(0.5))));
+        button.setBackground(new Background(new BackgroundFill(Color.INDIANRED.darker(), null, null)));
         button.setOnMouseEntered((e) -> {
             button.setScaleX(2.4);
             button.setScaleY(2.4);
@@ -74,28 +79,43 @@ public class MainPage {
         });
         button.setTranslateY(-50);
         button.setOnMouseClicked((e) -> {
-            layout.getChildren().remove(pagination);
+            HBox target = new Entrance(primaryStage).getTopPanel();
+            button.setTranslateX(240);
+            target.setTranslateY(-107);
+            layout.setRight(target);
             transition.translateTransition(0.8, logo.getTranslateX(), logo.getTranslateX() - 500,
                     logo.getTranslateY(), logo.getTranslateY(), logo);
             transition.translateTransition(0.8, info.getTranslateX(), info.getTranslateX() - 500,
                     info.getTranslateY(), info.getTranslateY(), info);
             transition.translateTransition(0.8, button.getTranslateX(), button.getTranslateX() - 500,
-                    button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> new Entrance().getLayout(primaryStage));
+                    button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> {
+                Entrance.getLayout(primaryStage);
+                layout.getChildren().remove(pagination);
+            });
+            transition.translateTransition(0.8, target.getTranslateX() + 500, target.getTranslateX() - 160,
+                    target.getTranslateY(), target.getTranslateY(), target);
         });
 
         layout.setCenter(button);
 
-
         Circle circle1 = new Circle(5, Color.WHITESMOKE);
         circle1.setOpacity(0.8);
         circle1.setOnMouseClicked((e) -> {
-            layout.getChildren().remove(pagination);
+            HBox target = new Entrance(primaryStage).getTopPanel();
+            button.setTranslateX(240);
+            target.setTranslateY(-107);
+            layout.setRight(target);
             transition.translateTransition(0.8, logo.getTranslateX(), logo.getTranslateX() - 500,
                     logo.getTranslateY(), logo.getTranslateY(), logo);
             transition.translateTransition(0.8, info.getTranslateX(), info.getTranslateX() - 500,
                     info.getTranslateY(), info.getTranslateY(), info);
             transition.translateTransition(0.8, button.getTranslateX(), button.getTranslateX() - 500,
-                    button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> new Entrance().getLayout(primaryStage));
+                    button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> {
+                Entrance.getLayout(primaryStage);
+                layout.getChildren().remove(pagination);
+            });
+            transition.translateTransition(0.8, target.getTranslateX() + 500, target.getTranslateX() - 160,
+                    target.getTranslateY(), target.getTranslateY(), target);
         });
         circle1.setOnMouseEntered((e) -> {
             circle1.setScaleX(1.1);
@@ -113,7 +133,25 @@ public class MainPage {
         layout.setBottom(pagination);
 
         layout.getStylesheets().add("view/style");
-        Scene scene = new Scene(layout, 800, 500);
+
+    }
+
+    public static void getPage(Stage primaryStage) {
+        MainPage mainPage = new MainPage(primaryStage);
+        Scene scene = new Scene(mainPage.layout, 800, 500);
+
         primaryStage.setScene(scene);
+    }
+
+    public Label getLogo() {
+        return logo;
+    }
+
+    public Label getInfo() {
+        return info;
+    }
+
+    public Label getButton() {
+        return button;
     }
 }

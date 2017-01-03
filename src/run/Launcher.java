@@ -20,6 +20,6 @@ public class Launcher extends Application {
         primaryStage.setTitle("Send Say");
         primaryStage.show();
 
-        new MainPage().getPage(primaryStage);
+        MainPage.getPage(primaryStage);
     }
 }
