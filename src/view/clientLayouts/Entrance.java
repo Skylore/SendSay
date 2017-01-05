@@ -24,9 +24,9 @@ public class Entrance {
 
     private BorderPane borderPane = new BorderPane();
 
-    private GridPane logInPane = SignInLayout.getLayout(primaryStage);
-    private GridPane signUpPane = SignUpLayout.getLayout(primaryStage);
-    private GridPane corporate = CorporateSignInLayout.getLayout(primaryStage);
+    private GridPane logInPane;
+    private GridPane signUpPane;
+    private GridPane corporate;
 
     private Label signIn = new Label("Sign in");
     private Label signUp = new Label("Sign up");
@@ -36,6 +36,11 @@ public class Entrance {
     private HBox pagination = new HBox(10);
 
     private void init() {
+
+        logInPane = SignInLayout.getLayout(primaryStage);
+        signUpPane = SignUpLayout.getLayout(primaryStage);
+        corporate = CorporateSignInLayout.getLayout(primaryStage);
+
         Transition transition = new Transition();
 
         signIn.setPrefSize(150, 30);
