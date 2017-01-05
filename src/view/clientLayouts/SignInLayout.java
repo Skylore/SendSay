@@ -2,6 +2,7 @@ package view.clientLayouts;
 
 import controllers.UserController;
 import controllers.UserControllerImpl;
+import exceptions.NoSuchContactException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -10,10 +11,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.AlertBox;
 
-public class SignInLayout {
+class SignInLayout {
 
-    public static GridPane getLayout(Stage primary) {
-        ClientLayout clientLayout = new ClientLayout();
+    static GridPane getLayout(Stage primary) {
         UserController userController = new UserControllerImpl();
 
         GridPane logInPane = new GridPane();
@@ -50,8 +50,8 @@ public class SignInLayout {
             if (!login.getText().equals("") && !pass.getText().equals("")) {
                 try {
                     userController.signIn(login.getText(), pass.getText());
-                    clientLayout.getLayout(primary);
-                } catch (Exception e1) {
+                    ClientLayout.getLayout(primary);
+                } catch (NoSuchContactException e1) {
                     AlertBox.display("Incorrect input");
                 }
             } else {

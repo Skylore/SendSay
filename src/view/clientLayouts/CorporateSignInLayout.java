@@ -110,11 +110,11 @@ public class CorporateSignInLayout {
         });
         submit.setOnMouseClicked((e) -> {
             if (admin.getOpacity() == 0.9 && pass.getText().equals(AdminControllerImpl.pass)) {
-                new ClientLayout().getLayout(primaryStage);
+                ClientLayout.getLayout(primaryStage);
             } else if (manager.getOpacity() == 0.9 && pass.getText().equals(ManagerControllerImpl.pass)) {
-                new ClientLayout().getLayout(primaryStage);
+                ClientLayout.getLayout(primaryStage);
             } else if (support.getOpacity() == 0.9 && pass.getText().equals(SupportControllerImpl.pass)) {
-                new ClientLayout().getLayout(primaryStage);
+                ClientLayout.getLayout(primaryStage);
             } else if (admin.getOpacity() != 0.9 && manager.getOpacity() != 0.9 && support.getOpacity() != 0.9) {
                 AlertBox.display("Please choose statement");
             } else {

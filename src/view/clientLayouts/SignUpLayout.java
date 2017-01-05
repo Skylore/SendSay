@@ -16,8 +16,8 @@ import view.AlertBox;
 
 import java.util.UUID;
 
-public class SignUpLayout {
-    public static GridPane getLayout(Stage primaryStage) {
+class SignUpLayout {
+    static GridPane getLayout(Stage primaryStage) {
         UserController userController = new UserControllerImpl();
 
         GridPane signUpPane = new GridPane();
@@ -111,7 +111,7 @@ public class SignUpLayout {
                                 if (VERIFY_CODE.equals(loginSignUp.getText())) {
                                     try {
                                         userController.signUp(log, password, mail);
-                                        new ClientLayout().getLayout(primaryStage);
+                                        ClientLayout.getLayout(primaryStage);
                                     } catch (BookedLoginException e3) {
                                         e3.printStackTrace();
                                     }

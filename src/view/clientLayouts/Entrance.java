@@ -3,10 +3,7 @@ package view.clientLayouts;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -141,28 +138,7 @@ public class Entrance {
 
         Circle circle = new Circle(5, Color.WHEAT);
         circle.setOpacity(0.8);
-        circle.setOnMouseClicked((e) -> {
-            MainPage mainPage = new MainPage(primaryStage);
-
-            VBox target = mainPage.getTop();
-            target.setTranslateY(-30);
-
-            Label target1 = mainPage.getButton();
-            target1.setTranslateX(-245);
-            target1.setTranslateY(183);
-
-            borderPane.setRight(target1);
-            borderPane.setCenter(target);
-            transition.translateTransition(0.8, topPanel.getTranslateX(), 640,
-                    topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).setOnFinished((e1) -> {
-                borderPane.getChildren().remove(pagination);
-                MainPage.getPage(primaryStage);
-            });
-            transition.translateTransition(0.8, target.getTranslateX() - 500, target.getTranslateX(), target.getTranslateY(),
-                    target.getTranslateY(), target);
-            transition.translateTransition(0.8, target1.getTranslateX() - 500, target1.getTranslateX(), target1.getTranslateY(),
-                    target1.getTranslateY(), target1);
-        });
+        circle.setOnMouseClicked((e) -> slide());
         circle.setOnMouseEntered((e) -> {
             circle.setScaleX(1.1);
             circle.setScaleY(1.1);
@@ -194,6 +170,43 @@ public class Entrance {
 
         borderPane.setTop(topPanel);
         borderPane.getStylesheets().add("view/style");
+        borderPane.getChildren().add(new KeyEvent());
+    }
+
+    private class KeyEvent extends Region {
+        private KeyEvent() {
+            setId("EnterPageKeyEvent");
+            setPrefSize(800, 500);
+            setFocusTraversable(true);
+            setOnKeyPressed((e) -> {
+                if (e.getCode().getName().equals("Left"))
+                    slide();
+            });
+        }
+    }
+
+    private void slide() {
+        Transition transition = new Transition();
+        MainPage mainPage = new MainPage(primaryStage);
+
+        VBox target = mainPage.getTop();
+        target.setTranslateY(-30);
+
+        Label target1 = mainPage.getButton();
+        target1.setTranslateX(-245);
+        target1.setTranslateY(183);
+
+        borderPane.setRight(target1);
+        borderPane.setCenter(target);
+        transition.translateTransition(0.8, topPanel.getTranslateX(), 640,
+                topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).setOnFinished((e1) -> {
+            borderPane.getChildren().remove(pagination);
+            MainPage.getPage(primaryStage);
+        });
+        transition.translateTransition(0.8, target.getTranslateX() - 500, target.getTranslateX(), target.getTranslateY(),
+                target.getTranslateY(), target);
+        transition.translateTransition(0.8, target1.getTranslateX() - 500, target1.getTranslateX(), target1.getTranslateY(),
+                target1.getTranslateY(), target1);
     }
 
     public static void getLayout(Stage primaryStage) {

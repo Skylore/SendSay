@@ -30,8 +30,6 @@ public class MainPage {
 
     private void init() {
 
-        Transition transition = new Transition();
-
         // top panel
         logo.getStyleClass().clear();
         logo.setScaleX(0.7);
@@ -68,45 +66,13 @@ public class MainPage {
         button.setOnMouseEntered((e) -> button.setOpacity(0.7));
         button.setOnMouseExited((e) -> button.setOpacity(0.6));
         button.setTranslateY(-50);
-        button.setOnMouseClicked((e) -> {
-            HBox target = new Entrance(primaryStage).getTopPanel();
-            button.setTranslateX(240);
-            target.setTranslateY(-107);
-            layout.setRight(target);
-            transition.translateTransition(0.8, logo.getTranslateX(), logo.getTranslateX() - 500,
-                    logo.getTranslateY(), logo.getTranslateY(), logo);
-            transition.translateTransition(0.8, info.getTranslateX(), info.getTranslateX() - 500,
-                    info.getTranslateY(), info.getTranslateY(), info);
-            transition.translateTransition(0.8, button.getTranslateX(), button.getTranslateX() - 500,
-                    button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> {
-                Entrance.getLayout(primaryStage);
-                layout.getChildren().remove(pagination);
-            });
-            transition.translateTransition(0.8, target.getTranslateX() + 500, target.getTranslateX() - 160,
-                    target.getTranslateY(), target.getTranslateY(), target);
-        });
+        button.setOnMouseClicked((e) -> slide());
 
         layout.setCenter(button);
 
         Circle circle1 = new Circle(5, Color.WHEAT);
         circle1.setOpacity(0.8);
-        circle1.setOnMouseClicked((e) -> {
-            HBox target = new Entrance(primaryStage).getTopPanel();
-            button.setTranslateX(240);
-            target.setTranslateY(-107);
-            layout.setRight(target);
-            transition.translateTransition(0.8, logo.getTranslateX(), logo.getTranslateX() - 500,
-                    logo.getTranslateY(), logo.getTranslateY(), logo);
-            transition.translateTransition(0.8, info.getTranslateX(), info.getTranslateX() - 500,
-                    info.getTranslateY(), info.getTranslateY(), info);
-            transition.translateTransition(0.8, button.getTranslateX(), button.getTranslateX() - 500,
-                    button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> {
-                Entrance.getLayout(primaryStage);
-                layout.getChildren().remove(pagination);
-            });
-            transition.translateTransition(0.8, target.getTranslateX() + 500, target.getTranslateX() - 160,
-                    target.getTranslateY(), target.getTranslateY(), target);
-        });
+        circle1.setOnMouseClicked((e) -> slide());
         circle1.setOnMouseEntered((e) -> {
             circle1.setScaleX(1.1);
             circle1.setScaleY(1.1);
@@ -123,6 +89,44 @@ public class MainPage {
         layout.setBottom(pagination);
 
         layout.getStylesheets().add("view/style");
+        layout.getChildren().add(new KeyEvent());
+
+    }
+
+    private class KeyEvent extends Region {
+        private KeyEvent() {
+            setId("KeyEvent");
+            setPrefSize(800, 500);
+            setFocusTraversable(true);
+            setOnKeyPressed((e) -> {
+                switch (e.getCode().getName()) {
+                    case "Right":
+                        slide();
+                    case "Enter":
+                        slide();
+
+                }
+            });
+        }
+    }
+
+    private void slide() {
+        Transition transition = new Transition();
+        HBox target = new Entrance(primaryStage).getTopPanel();
+        button.setTranslateX(240);
+        target.setTranslateY(-107);
+        layout.setRight(target);
+        transition.translateTransition(0.8, logo.getTranslateX(), logo.getTranslateX() - 500,
+                logo.getTranslateY(), logo.getTranslateY(), logo);
+        transition.translateTransition(0.8, info.getTranslateX(), info.getTranslateX() - 500,
+                info.getTranslateY(), info.getTranslateY(), info);
+        transition.translateTransition(0.8, button.getTranslateX(), button.getTranslateX() - 500,
+                button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> {
+            Entrance.getLayout(primaryStage);
+            layout.getChildren().remove(pagination);
+        });
+        transition.translateTransition(0.8, target.getTranslateX() + 500, target.getTranslateX() - 160,
+                target.getTranslateY(), target.getTranslateY(), target);
 
     }
 
