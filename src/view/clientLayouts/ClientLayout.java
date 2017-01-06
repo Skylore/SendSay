@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 class ClientLayout {
@@ -36,6 +38,15 @@ class ClientLayout {
     private void init() {
 
         // top panel preferences
+
+        Rectangle topPanelFill = new Rectangle(800, 79,Color.WHITESMOKE);
+        topPanelFill.setOpacity(0.7);
+        layout.getChildren().add(topPanelFill);
+
+        Line topLine = new Line(0, 80, 800, 80);
+        topLine.setFill(Color.WHITESMOKE);
+        layout.getChildren().add(topLine);
+
         topPanel.setTranslateX(123);
         topPanel.setOpacity(0.8);
         topPanel.getChildren().addAll(distributionBox(), contactListBox(), workRequestBox(), helpBox(), settingsBox(), exitBox());
@@ -59,7 +70,7 @@ class ClientLayout {
         login.getStyleClass().clear();
         login.setOpacity(0.7);
         login.setStyle(" -fx-font-weight: bold");
-        login.setTextFill(Color.LIGHTCORAL);
+        login.setTextFill(Color.DARKRED);
         login.setScaleX(1.4);
         login.setScaleY(1.4);
 
@@ -73,7 +84,6 @@ class ClientLayout {
         distribution = new Label("", new ImageView("view/res/distributionIcon.png"));
 
         VBox distributionBox = new VBox();
-        distributionBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
         distributionBox.setAlignment(Pos.CENTER);
         distributionBox.setPrefWidth(110);
         distributionBox.setScaleX(0.8);
@@ -92,7 +102,9 @@ class ClientLayout {
         });
         Label distributionLabel = new Label("Distribution");
         distributionLabel.setAlignment(Pos.CENTER);
+        distributionLabel.getStyleClass().clear();
         distributionLabel.setStyle(" -fx-font-weight: bold");
+        distributionLabel.setTextFill(Color.DARKRED);
         distributionLabel.setPrefWidth(distribution.getPrefWidth());
         distributionBox.getChildren().addAll(distribution, distributionLabel);
 
@@ -108,7 +120,6 @@ class ClientLayout {
         contactList.getStyleClass().clear();
         contactList.setScaleX(1);
         contactList.setScaleY(1);
-        contactListBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
         contactList.setAlignment(Pos.CENTER);
         contactList.setOnMouseEntered((e) -> {
             contactList.setScaleX(1.1);
@@ -121,7 +132,9 @@ class ClientLayout {
         Label contactListLabel = new Label("Contact lists");
         contactListLabel.setAlignment(Pos.CENTER);
         contactListLabel.setAlignment(Pos.CENTER);
+        contactListLabel.getStyleClass().clear();
         contactListLabel.setStyle(" -fx-font-weight: bold");
+        contactListLabel.setTextFill(Color.DARKRED);
         contactListLabel.setPrefWidth(contactList.getPrefWidth());
         contactListBox.getChildren().addAll(contactList, contactListLabel);
 
@@ -137,7 +150,6 @@ class ClientLayout {
         workRequest.getStyleClass().clear();
         workRequest.setScaleX(1);
         workRequest.setScaleY(1);
-        workRequestBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
         workRequest.setAlignment(Pos.CENTER);
         workRequest.setOnMouseEntered((e) -> {
             workRequest.setScaleX(1.1);
@@ -150,7 +162,9 @@ class ClientLayout {
         Label workRequestLabel = new Label("Work");
         workRequestLabel.setAlignment(Pos.CENTER);
         workRequestLabel.setAlignment(Pos.CENTER);
+        workRequestLabel.getStyleClass().clear();
         workRequestLabel.setStyle(" -fx-font-weight: bold");
+        workRequestLabel.setTextFill(Color.DARKRED);
         workRequestLabel.setPrefWidth(workRequest.getPrefWidth());
         workRequestBox.getChildren().addAll(workRequest, workRequestLabel);
 
@@ -166,7 +180,6 @@ class ClientLayout {
         help.getStyleClass().clear();
         help.setScaleX(1);
         help.setScaleY(1);
-        helpBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
         help.setAlignment(Pos.CENTER);
         help.setOnMouseEntered((e) -> {
             help.setScaleX(1.1);
@@ -178,6 +191,8 @@ class ClientLayout {
         });
         Label helpLabel = new Label("Help");
         helpLabel.setAlignment(Pos.CENTER);
+        helpLabel.getStyleClass().clear();
+        helpLabel.setTextFill(Color.DARKRED);
         helpLabel.setStyle(" -fx-font-weight: bold");
         helpLabel.setPrefWidth(help.getPrefWidth());
         helpBox.getChildren().addAll(help, helpLabel);
@@ -194,7 +209,6 @@ class ClientLayout {
         settings.getStyleClass().clear();
         settings.setScaleX(1);
         settings.setScaleY(1);
-        settingsBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
         settings.setAlignment(Pos.CENTER);
         settings.setOnMouseEntered((e) -> {
             settings.setScaleX(1.1);
@@ -207,6 +221,8 @@ class ClientLayout {
         Label settingsLabel = new Label("Preferences");
         settingsLabel.setAlignment(Pos.CENTER);
         settingsLabel.setAlignment(Pos.CENTER);
+        settingsLabel.getStyleClass().clear();
+        settingsLabel.setTextFill(Color.DARKRED);
         settingsLabel.setStyle(" -fx-font-weight: bold");
         settingsLabel.setPrefWidth(settings.getPrefWidth());
         settingsBox.getChildren().addAll(settings, settingsLabel);
@@ -223,7 +239,6 @@ class ClientLayout {
         exit.getStyleClass().clear();
         exit.setScaleX(1);
         exit.setScaleY(1);
-        exitBox.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, null, null)));
         exit.setAlignment(Pos.CENTER);
         exit.setOnMouseEntered((e) -> {
             exit.setScaleX(1.1);
@@ -236,6 +251,8 @@ class ClientLayout {
         Label exitLabel = new Label("Log out");
         exitLabel.setAlignment(Pos.CENTER);
         exitLabel.setAlignment(Pos.CENTER);
+        exitLabel.getStyleClass().clear();
+        exitLabel.setTextFill(Color.DARKRED);
         exitLabel.setStyle(" -fx-font-weight: bold");
         exitLabel.setPrefWidth(exit.getPrefWidth());
         exitBox.getChildren().addAll(exit, exitLabel);

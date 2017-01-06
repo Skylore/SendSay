@@ -34,9 +34,11 @@ public class Entrance {
 
     private void init() {
 
-        logInPane  = new SignInLayout(primaryStage).getLogInPane();
+        logInPane = new SignInLayout(primaryStage).getLogInPane();
         signUpPane = SignUpLayout.getLayout(primaryStage);
         corporate = CorporateSignInLayout.getLayout(primaryStage);
+
+        borderPane.getChildren().add(new KeyEvent());
 
         Transition transition = new Transition();
 
@@ -194,6 +196,20 @@ public class Entrance {
                 target.getTranslateY(), target);
         transition.translateTransition(0.8, target1.getTranslateX() - 500, target1.getTranslateX(), target1.getTranslateY(),
                 target1.getTranslateY(), target1);
+
+
+    }
+
+    private class KeyEvent extends Region {
+        KeyEvent() {
+            setId("EnterKeyEvent");
+            setPrefSize(800, 500);
+            setFocusTraversable(true);
+            setOnKeyPressed((e) -> {
+                if (e.getCode().getName().equals("Left"))
+                    slide();
+            });
+        }
     }
 
     public static void getLayout(Stage primaryStage) {
