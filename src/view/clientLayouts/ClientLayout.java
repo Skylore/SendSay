@@ -1,5 +1,7 @@
 package view.clientLayouts;
 
+import controllers.UserController;
+import controllers.UserControllerImpl;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -17,12 +19,14 @@ class ClientLayout {
         init();
     }
 
+    private UserController userController = new UserControllerImpl();
+
     private BorderPane layout = new BorderPane();
     private HBox topPanel = new HBox(-20);
 
-    private Label sendSayLogo = initSendSayLogo();
-    private Label distribution = new Label("", new ImageView("view/res/distributionIcon.png"));
+    private HBox inSystem = inSystemLogin();
 
+    private Label distribution = new Label("", new ImageView("view/res/distributionIcon.png"));
     private Label contactList = new Label("", new ImageView("view/res/contactListIcon.png"));
     private Label workRequest = new Label("", new ImageView("view/res/workRequestIcon.png"));
     private Label help = new Label("", new ImageView("view/res/supportIcon.png"));
@@ -32,27 +36,37 @@ class ClientLayout {
     private void init() {
 
         // top panel preferences
-        sendSayLogo.getStyleClass().clear();
-        topPanel.setTranslateX(30);
+        topPanel.setTranslateX(123);
         topPanel.setOpacity(0.8);
         topPanel.getChildren().addAll(distributionBox(), contactListBox(), workRequestBox(), helpBox(), settingsBox(), exitBox());
         topPanel.setAlignment(Pos.TOP_CENTER);
         layout.setTop(topPanel);
 
-        sendSayLogo.setTranslateY(-60);
-        sendSayLogo.setTranslateX(10);
-        layout.setLeft(sendSayLogo);
+        inSystem.setTranslateY(-250);
+        inSystem.setTranslateX(10);
+        layout.setLeft(inSystem);
 
         layout.getStylesheets().add("view/style");
     }
 
-    private Label initSendSayLogo() {
+    private HBox inSystemLogin() {
+        Label scope = new Label("", new ImageView("view/res/sendSayIcon.png"));
+        scope.getStyleClass().clear();
+        scope.setScaleX(0.7);
+        scope.setScaleY(0.7);
+        scope.setPrefSize(scope.getWidth(), scope.getHeight());
+        Label login = new Label(userController.getInSystem().getLogin());
+        login.getStyleClass().clear();
+        login.setOpacity(0.7);
+        login.setStyle(" -fx-font-weight: bold");
+        login.setTextFill(Color.LIGHTCORAL);
+        login.setScaleX(1.4);
+        login.setScaleY(1.4);
 
-        ImageView imageView = new ImageView("view/SendSayLogo.png");
-        imageView.setFitWidth(141);
-        imageView.setFitHeight(38);
+        HBox box = new HBox(10, scope, login);
+        box.setAlignment(Pos.CENTER);
 
-        return new Label("", imageView);
+        return box;
     }
 
     private VBox distributionBox() {

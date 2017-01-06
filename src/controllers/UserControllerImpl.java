@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import jdk.nashorn.internal.objects.annotations.Constructor;
-import jdk.nashorn.internal.objects.annotations.Function;
 import models.ContactList;
 import models.SupportRequest;
 import models.User;
@@ -22,7 +21,7 @@ import static javafx.collections.FXCollections.observableHashMap;
 public class UserControllerImpl implements UserController {
 
     private DataBase dataBase = DataBase.getInstance();
-    private User inSystem;
+    private static User inSystem;
 
     @Override
     public void signUp(String login, String pass, String email) throws BookedLoginException {
@@ -31,6 +30,7 @@ public class UserControllerImpl implements UserController {
         }
 
         dataBase.users.put(login, new User(login, pass, email));
+        inSystem = dataBase.users.get(login);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class UserControllerImpl implements UserController {
         if (!dataBase.users.containsKey(login)) {
             throw new NoSuchContactException();
         } else if (dataBase.users.get(login).getPassword().equals(pass)) {
-            this.inSystem = dataBase.users.get(login);
+            inSystem = dataBase.users.get(login);
             return;
         }
 

@@ -9,8 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.AlertBox;
 
-public class CorporateSignInLayout {
-    public static GridPane getLayout(Stage primaryStage) {
+class CorporateSignInLayout {
+    static GridPane getLayout(Stage primaryStage) {
 
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10, 10, 10, 10));

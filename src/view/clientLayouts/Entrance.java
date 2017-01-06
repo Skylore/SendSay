@@ -34,7 +34,7 @@ public class Entrance {
 
     private void init() {
 
-        logInPane = SignInLayout.getLayout(primaryStage);
+        logInPane  = new SignInLayout(primaryStage).getLogInPane();
         signUpPane = SignUpLayout.getLayout(primaryStage);
         corporate = CorporateSignInLayout.getLayout(primaryStage);
 
@@ -170,19 +170,6 @@ public class Entrance {
 
         borderPane.setTop(topPanel);
         borderPane.getStylesheets().add("view/style");
-        borderPane.getChildren().add(new KeyEvent());
-    }
-
-    private class KeyEvent extends Region {
-        private KeyEvent() {
-            setId("EnterPageKeyEvent");
-            setPrefSize(800, 500);
-            setFocusTraversable(true);
-            setOnKeyPressed((e) -> {
-                if (e.getCode().getName().equals("Left"))
-                    slide();
-            });
-        }
     }
 
     private void slide() {
