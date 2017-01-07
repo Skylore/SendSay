@@ -45,6 +45,10 @@ public class UserControllerImpl implements UserController {
         throw new InvalidAccessException("Incorrect password");
     }
 
+    // replace return type for integer
+    // implement -> return count of sent messages
+    // remove throwing an exception by first fail of sending
+    // throw exception in that case if whole distribution has failed
     @Override
     public void makeDistribution(List<String> receivers, String tittle, String text) throws InvalidEmailException, BannedUserException {
         if (dataBase.banned.containsKey(inSystem.getLogin())) {
