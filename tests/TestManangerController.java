@@ -1,8 +1,7 @@
-import controllers.ManangerConroller;
-import controllers.ManangerControllerImpl;
+import controllers.ManagerController;
+import controllers.ManagerControllerImpl;
 import dataBase.DataBase;
 import exceptions.NoSuchContactException;
-import exceptions.NoSuchRequestException;
 import javafx.collections.ObservableList;
 import models.User;
 import static org.junit.Assert.*;
@@ -14,7 +13,7 @@ import org.junit.Test;
 public class TestManangerController {
 
     private DataBase dataBase = DataBase.getInstance();
-    private ManangerConroller manangerConroller = new ManangerControllerImpl();
+    private ManagerController manangerConroller = new ManagerControllerImpl();
     private User user1, user2, user3, mentor;
 
     @Before

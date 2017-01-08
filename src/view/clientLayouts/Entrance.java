@@ -166,7 +166,6 @@ public class Entrance {
         pagination.getChildren().addAll(circle, circle1);
 
         borderPane.setBottom(pagination);
-
         topPanel.setAlignment(Pos.TOP_CENTER);
         topPanel.getChildren().addAll(signIn, signUp, corporateLabel);
 
@@ -176,28 +175,15 @@ public class Entrance {
 
     private void slide() {
         Transition transition = new Transition();
-        MainPage mainPage = new MainPage(primaryStage);
-
-        VBox target = mainPage.getTop();
-        target.setTranslateY(-30);
-
-        Label target1 = mainPage.getButton();
-        target1.setTranslateX(-245);
-        target1.setTranslateY(183);
-
-        borderPane.setRight(target1);
-        borderPane.setCenter(target);
-        transition.translateTransition(0.8, topPanel.getTranslateX(), 640,
-                topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).setOnFinished((e1) -> {
-            borderPane.getChildren().remove(pagination);
-            MainPage.getPage(primaryStage);
-        });
-        transition.translateTransition(0.8, target.getTranslateX() - 500, target.getTranslateX(), target.getTranslateY(),
-                target.getTranslateY(), target);
-        transition.translateTransition(0.8, target1.getTranslateX() - 500, target1.getTranslateX(), target1.getTranslateY(),
-                target1.getTranslateY(), target1);
-
-
+        transition.translateTransition(0.8, topPanel.getTranslateX(), topPanel.getTranslateX() + 800,
+                topPanel.getTranslateY(), topPanel.getTranslateY(), topPanel).
+                setOnFinished((e) -> MainPage.getPage(primaryStage));
+        Label target = new MainPage(primaryStage).getFrontPane();
+        target.setTranslateX(-800);
+        target.setTranslateY(190);
+        borderPane.getChildren().add(target);
+        transition.translateTransition(0.8, target.getTranslateX(), target.getTranslateX() + 800,
+                target.getTranslateY(), target.getTranslateY(), target);
     }
 
     private class KeyEvent extends Region {
@@ -206,7 +192,7 @@ public class Entrance {
             setPrefSize(800, 500);
             setFocusTraversable(true);
             setOnKeyPressed((e) -> {
-                if (e.getCode().getName().equals("Left"))
+                if (e.getCode().getName().equals("Left") && borderPane.getCenter() == null)
                     slide();
             });
         }

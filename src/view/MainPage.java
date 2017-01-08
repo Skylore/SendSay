@@ -3,7 +3,7 @@ package view;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -20,31 +20,18 @@ public class MainPage {
     }
 
     private BorderPane layout = new BorderPane();
-    private VBox top = new VBox();
 
-    private Label logo = new Label("", new ImageView("view/SendSayLogo.png"));
-    private Label info = new Label("Bulk email distributions");
-    private Label button = new Label("", new ImageView("view/res/tryItButton.jpg"));
+    private Label frontPane = new Label("", new ImageView("view/res/SendsayPrimaryPage.png"));
 
     private HBox pagination = new HBox(10);
 
     private void init() {
 
-        // top panel
-        logo.getStyleClass().clear();
-        logo.setScaleX(0.7);
-        logo.setScaleY(0.7);
-
-        info.getStyleClass().clear();
-        info.setAlignment(Pos.CENTER);
-        info.setScaleX(1.5);
-        info.setScaleY(1.5);
-        info.setTextFill(Color.WHEAT);
-        info.setTranslateX(60);
-
-        top.getChildren().addAll(logo, info);
-
-        layout.setTop(top);
+        frontPane.getStyleClass().clear();
+        frontPane.setOpacity(0.7);
+        frontPane.setTranslateY(-55);
+        frontPane.setOnMouseClicked((e) -> slide());
+        layout.setCenter(frontPane);
 
         // pagination
         Circle circle = new Circle(5, Color.WHEAT.darker());
@@ -57,18 +44,6 @@ public class MainPage {
             circle.setScaleX(1);
             circle.setScaleY(1);
         });
-
-        // center button
-        button.getStyleClass().clear();
-        button.setScaleX(0.7);
-        button.setScaleY(0.7);
-        button.setOpacity(0.6);
-        button.setOnMouseEntered((e) -> button.setOpacity(0.7));
-        button.setOnMouseExited((e) -> button.setOpacity(0.6));
-        button.setTranslateY(-50);
-        button.setOnMouseClicked((e) -> slide());
-
-        layout.setCenter(button);
 
         Circle circle1 = new Circle(5, Color.WHEAT);
         circle1.setOpacity(0.8);
@@ -112,22 +87,15 @@ public class MainPage {
 
     private void slide() {
         Transition transition = new Transition();
-        HBox target = new Entrance(primaryStage).getTopPanel();
-        button.setTranslateX(240);
-        target.setTranslateY(-107);
-        layout.setRight(target);
-        transition.translateTransition(0.8, logo.getTranslateX(), logo.getTranslateX() - 500,
-                logo.getTranslateY(), logo.getTranslateY(), logo);
-        transition.translateTransition(0.8, info.getTranslateX(), info.getTranslateX() - 500,
-                info.getTranslateY(), info.getTranslateY(), info);
-        transition.translateTransition(0.8, button.getTranslateX(), button.getTranslateX() - 500,
-                button.getTranslateY(), button.getTranslateY(), button).setOnFinished((e2) -> {
-            Entrance.getLayout(primaryStage);
-            layout.getChildren().remove(pagination);
-        });
-        transition.translateTransition(0.8, target.getTranslateX() + 500, target.getTranslateX() - 160,
-                target.getTranslateY(), target.getTranslateY(), target);
+        transition.translateTransition(0.8, frontPane.getTranslateX(), frontPane.getTranslateX() - 800,
+                frontPane.getTranslateY() - 15, frontPane.getTranslateY() - 15, frontPane);
 
+        HBox target = new Entrance(primaryStage).getTopPanel();
+        layout.setTop(target);
+        target.setTranslateX(800);
+        transition.translateTransition(0.8, target.getTranslateX(), target.getTranslateX() - 800,
+                target.getTranslateY(), target.getTranslateY(), target).
+                setOnFinished((e) -> Entrance.getLayout(primaryStage));
     }
 
     public static void getPage(Stage primaryStage) {
@@ -137,11 +105,7 @@ public class MainPage {
         primaryStage.setScene(scene);
     }
 
-    public Label getButton() {
-        return button;
-    }
-
-    public VBox getTop() {
-        return top;
+    public Label getFrontPane() {
+        return frontPane;
     }
 }
