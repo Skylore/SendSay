@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.*;
+import java.util.List;
 
 import exceptions.*;
 import javafx.collections.ObservableList;
@@ -16,9 +17,9 @@ public interface UserController {
 
    void signIn(String login, String pass) throws NoSuchContactException;
 
-   void makeDistribution(List<String> receivers,String tittle, String text) throws InvalidEmailException, BannedUserException;
+   List<String> makeDistribution(List<String> receivers,String tittle, String text) throws InvalidEmailException, BannedUserException;
 
-   void makeDistribution(String contactList, String tittle, String text) throws NoSuchContactListException, InvalidEmailException, BannedUserException;
+   List<String> makeDistribution(String contactList, String tittle, String text) throws NoSuchContactListException, InvalidEmailException, BannedUserException;
 
    void createContactList(Map<String, String> contacts, String name, User owner) throws BookedListNameException, NoSuchContactException;
 

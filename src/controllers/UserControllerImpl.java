@@ -1,18 +1,19 @@
 package controllers;
 
+import annotations.Valid;
 import api.SendMailSSL;
 import dataBase.DataBase;
 import exceptions.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import models.ContactList;
 import models.SupportRequest;
 import models.User;
 import models.WorkRequest;
 import sun.plugin.dom.exception.InvalidAccessException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class UserControllerImpl implements UserController {
     private static User inSystem;
 
     @Override
-    public void signUp(String login, String pass, String email) throws BookedLoginException {
+    public void signUp(String login, String pass, @Valid String email) throws BookedLoginException {
         if (dataBase.users.containsKey(login)) {
             throw new BookedLoginException();
         }
@@ -45,39 +46,51 @@ public class UserControllerImpl implements UserController {
         throw new InvalidAccessException("Incorrect password");
     }
 
-    // replace return type for integer
-    // implement -> return count of sent messages
-    // remove throwing an exception by first fail of sending
-    // throw exception in that case if whole distribution has failed
     @Override
-    public void makeDistribution(List<String> receivers, String tittle, String text) throws InvalidEmailException, BannedUserException {
+    public List<String> makeDistribution(List<String> receivers, String tittle, String text) throws InvalidEmailException, BannedUserException {
         if (dataBase.banned.containsKey(inSystem.getLogin())) {
             throw new BannedUserException("You have been banned");
         }
+
+        List<String> res = new ArrayList<>();
         for (String receiver : receivers) {
             try {
                 SendMailSSL.sendLetter(receiver, tittle, text);
-            } catch (RuntimeException e) {
-                throw new InvalidEmailException();
+                res.add(receiver);
+            } catch (Exception e) {
+                System.err.println(receiver + " has been failed");
             }
         }
+
+        if (res.isEmpty()) {
+            throw new InvalidEmailException("All operations have been failed");
+        }
+
+        return res;
     }
 
     @Override
-    public void makeDistribution(String contactList, String tittle, String text) throws NoSuchContactListException, InvalidEmailException, BannedUserException {
+    public List<String> makeDistribution(String contactList, String tittle, String text) throws NoSuchContactListException, InvalidEmailException, BannedUserException {
         if (dataBase.banned.containsKey(inSystem.getLogin())) {
             throw new BannedUserException();
         } else if (!dataBase.contactLists.containsKey(contactList)) {
             throw new NoSuchContactListException();
         }
 
+        List<String> res = new ArrayList<>();
         for (String email : dataBase.contactLists.get(contactList).getContacts().values()) {
             try {
                 SendMailSSL.sendLetter(email, tittle, text);
+                res.add(email);
             } catch (RuntimeException ex) {
-                throw new InvalidEmailException();
+                System.err.println(email + "has been failed");
             }
         }
+
+        if (res.isEmpty())
+            throw new InvalidEmailException("All operation have been failed");
+
+        return res;
     }
 
     @Override
@@ -100,7 +113,6 @@ public class UserControllerImpl implements UserController {
         dataBase.contactLists.remove(name);
     }
 
-    @Constructor
     @Override
     public void addContactToList(String scope, String name, String email) throws NoSuchContactListException {
         if (!dataBase.contactLists.containsKey(scope)) {

@@ -18,8 +18,8 @@ public class Launcher extends Application {
         primaryStage.setOnCloseRequest((e) -> new Logger().write(Converter.toJson(DataBase.getInstance())));
         primaryStage.setResizable(false);
         primaryStage.setTitle("Send Say");
-        primaryStage.show();
 
         MainPage.getPage(primaryStage);
+        primaryStage.show();
     }
 }

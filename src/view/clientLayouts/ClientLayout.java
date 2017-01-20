@@ -88,6 +88,7 @@ class ClientLayout {
         distributionBox.setPrefWidth(110);
         distributionBox.setScaleX(0.8);
         distributionBox.setScaleY(0.8);
+        distributionBox.setOnMouseClicked((e) -> layout.setCenter(DistributionLayout.getPane(primaryStage)));
         distribution.getStyleClass().clear();
         distribution.setScaleX(1);
         distribution.setScaleY(1);
