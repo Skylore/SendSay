@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -58,7 +59,7 @@ public class MainPage {
         });
 
         pagination.setAlignment(Pos.BOTTOM_CENTER);
-        pagination.setTranslateY(-20);
+        pagination.setTranslateY(20);
         pagination.getChildren().addAll(circle, circle1);
 
         layout.setBottom(pagination);
